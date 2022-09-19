@@ -1,18 +1,12 @@
-const obj = {
-    name: 'Narendra',
-    age: 23,
-    date: new Date(),
-    techStack: {
-        frontEnd: 'React',
-        backEnd: 'Node'
-    }
-}
+/*
+    Spread operator => shallow copy
+    Object.assign({},obj) => shallow copy (used for objects only)
+    Array.from(arr) => shallow copy (used for arrayss only)
+    JSON.parse(JSON.stringify(obj)) => does a deep copy. But dates, regular expressions are not parsed properly
+    after stringification and functions are omitted during stringification
 
-const arr = [
-    1,
-    2,
-    obj
-]
+    This is a function to do deep copies recursively
+*/
 
 function deepClone(obj) {
     var clonedObj;
@@ -49,10 +43,25 @@ function deepClone(obj) {
     return clonedObj;
 }
 
-const newObj = deepClone(arr)
+const obj = {
+    name: 'Narendra',
+    age: 23,
+    date: new Date(),
+    techStack: {
+        frontEnd: 'React',
+        backEnd: 'Node'
+    },
+    getName: function() {
+        console.log(this.name);
+    }
+}
 
-newObj[2].techStack.frontEnd = 'Angular'
-newObj[0] = 3;
+const arr = [1,2,obj];
+
+const newArr = deepClone(arr);
+
+newArr[2].techStack.frontEnd = 'Angular';
+newArr[0] = 3;
 
 console.log(arr[2].techStack.frontEnd); // => React
 console.log(arr[0]); // => 1
